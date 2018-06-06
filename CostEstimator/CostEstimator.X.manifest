@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+  <assemblyIdentity name="CostEstimator" version="1.0.0.0"></assemblyIdentity>
+
+  <clrClass clsid="{881b4da5-3499-4d71-824c-cc30e08b9e0b}" progid="CostEstimator.StandardAddInServer" threadingModel="Both" name="CostEstimator.StandardAddInServer" runtimeVersion=""></clrClass>
+
+  <file name="CostEstimator.dll" hashalg="SHA1"></file>
+
+</assembly>
