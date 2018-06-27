@@ -83,13 +83,38 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Autodesk.Inventor.Interop\v4.0_21.0.0.0__d84147f8b4276564\autodesk.inventor.interop.dll</HintPath>
     </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Costable.cs" />
+    <Compile Include="CostForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CostForm.Designer.cs">
+      <DependentUpon>CostForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CostUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CostUserControl.Designer.cs">
+      <DependentUpon>CostUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StandardAddInServer.cs">
       <SubType>Code</SubType>
@@ -97,12 +122,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CostEstimator.X.manifest" />
+    <None Include="Resources\dollar sign icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Autodesk.CostEstimator.Inventor.addin" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CostForm.resx">
+      <DependentUpon>CostForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CostUserControl.resx">
+      <DependentUpon>CostUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\costEstimateIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
