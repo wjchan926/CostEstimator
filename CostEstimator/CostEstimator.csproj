@@ -128,9 +128,6 @@
     <None Include="Autodesk.CostEstimator.Inventor.addin" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Readme.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="CostForm.resx">
       <DependentUpon>CostForm.cs</DependentUpon>
     </EmbeddedResource>

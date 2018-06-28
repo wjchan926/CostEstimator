@@ -67,7 +67,7 @@ namespace InvAddIn
                 costForm = null;
             }
 
-            costForm = new CostForm();
+            costForm = new CostForm(invApp);
             costForm.Show(new WindowWrapper((IntPtr)invApp.MainFrameHWND));
             return costForm.Handle.ToInt64();            
         }

@@ -33,10 +33,10 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.label3 = new System.Windows.Forms.Label();
+            this.costLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.partNumLabel = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -50,6 +50,7 @@
             this.updateCostBtn.TabIndex = 0;
             this.updateCostBtn.Text = "Update Cost";
             this.updateCostBtn.UseVisualStyleBackColor = true;
+            this.updateCostBtn.Click += new System.EventHandler(this.updateCostBtn_Click);
             // 
             // label1
             // 
@@ -88,28 +89,38 @@
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // label3
+            // costLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label3.Location = new System.Drawing.Point(27, 31);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 31);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Cost";
+            this.costLabel.AutoSize = true;
+            this.costLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.costLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.costLabel.Location = new System.Drawing.Point(27, 31);
+            this.costLabel.Name = "costLabel";
+            this.costLabel.Size = new System.Drawing.Size(75, 31);
+            this.costLabel.TabIndex = 5;
+            this.costLabel.Text = "Cost";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.partNumLabel);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.costLabel);
             this.groupBox1.Controls.Add(this.updateCostBtn);
             this.groupBox1.Location = new System.Drawing.Point(0, -2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(350, 77);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
+            // 
+            // partNumLabel
+            // 
+            this.partNumLabel.AutoSize = true;
+            this.partNumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.partNumLabel.Location = new System.Drawing.Point(80, 11);
+            this.partNumLabel.Name = "partNumLabel";
+            this.partNumLabel.Size = new System.Drawing.Size(98, 20);
+            this.partNumLabel.TabIndex = 6;
+            this.partNumLabel.Text = "Part Number";
             // 
             // groupBox2
             // 
@@ -120,16 +131,6 @@
             this.groupBox2.Size = new System.Drawing.Size(350, 394);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(80, 11);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 20);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Part Number";
             // 
             // CostForm
             // 
@@ -160,9 +161,9 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label costLabel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label partNumLabel;
     }
 }
