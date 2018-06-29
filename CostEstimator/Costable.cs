@@ -15,6 +15,8 @@ namespace InvAddIn
         public Document inventorDoc;
         DataTable matBreakdown;
         public double cost { get; private set; }
+        //public double rawCost { get; private set; } = 0;
+        //public double purchasedCost { get; private set; } = 0;
 
         static readonly Dictionary<string, double> materialMap = new Dictionary<string, double>()
         {
@@ -49,16 +51,41 @@ namespace InvAddIn
         {
             double mass;
             string material;
-
-
+                                    
             if (bomItem.DocumentType == DocumentTypeEnum.kPartDocumentObject)
             {
+                
                 PartDocument partDoc = (PartDocument)bomItem;
                 PartComponentDefinition partCompDef = partDoc.ComponentDefinition;
                 PropertySets propertySets = partDoc.PropertySets;
-                PropertySet propertySet = propertySets["Design Tracking Properties"];
-                Property materialProp = propertySet["Material"];
+                PropertySet propertySet = propertySets["Design Tracking Properties"];    
+                Property costProp = propertySet["Cost"];
 
+                if (partCompDef.BOMStructure == BOMStructureEnum.kPurchasedBOMStructure || partCompDef.BOMStructure == BOMStructureEnum.kInseparableBOMStructure)
+                {
+                    cost = Convert.ToDouble(costProp.Value);
+                   // purchasedCost = Convert.ToDouble(costProp.Value);
+
+                    Marshal.ReleaseComObject(costProp);
+                    costProp = null;
+
+                    Marshal.ReleaseComObject(propertySet);
+                    propertySet = null;
+
+                    Marshal.ReleaseComObject(propertySets);
+                    propertySets = null;
+
+                    Marshal.ReleaseComObject(partCompDef);
+                    partCompDef = null;
+
+                    Marshal.ReleaseComObject(partDoc);
+                    partDoc = null;
+
+                    return;
+                }
+
+                Property materialProp = propertySet["Material"];
+                
                 // Mass of Part
                 mass = partCompDef.MassProperties.Mass;
 
@@ -74,15 +101,14 @@ namespace InvAddIn
                 {
                     cost = 0.0;
                 }
-                 
-                Property costProp = propertySet["Cost"];
+                         
                 costProp.Value = cost;  // Set Estimated Cost
-                
-                Marshal.ReleaseComObject(costProp);
-                costProp = null;
 
                 Marshal.ReleaseComObject(materialProp);
                 materialProp = null;
+
+                Marshal.ReleaseComObject(costProp);
+                costProp = null;
 
                 Marshal.ReleaseComObject(propertySet);
                 propertySet = null;
@@ -120,7 +146,6 @@ namespace InvAddIn
                 {
                     try
                     {
-                   //     PartDocument partDoc = (PartDocument)nestedPart;
                         PropertySets propertySets = nestedPart.PropertySets;
                         PropertySet propertySet = propertySets["Design Tracking Properties"];
                         Property costProp = propertySet["Cost"];
@@ -136,8 +161,6 @@ namespace InvAddIn
                         Marshal.ReleaseComObject(propertySets);
                         propertySets = null;
 
-                        //Marshal.ReleaseComObject(partDoc);
-                        //partDoc = null;
                     }
                     catch
                     {
@@ -145,7 +168,6 @@ namespace InvAddIn
                     }
   
                 }
-
 
                 asmCost.Value = cost;
 

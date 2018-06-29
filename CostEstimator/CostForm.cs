@@ -39,12 +39,22 @@ namespace InvAddIn
 
         private void updateCostBtn_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("Clicked");
-            Costable currentFile = new Costable(invApp, invApp.ActiveDocument);            
-            currentFile.CostOf(currentFile.inventorDoc);
+            // Do nothing if no file open
+            try
+            {
+                Costable currentFile = new Costable(invApp, invApp.ActiveDocument);
+                currentFile.CostOf(currentFile.inventorDoc);
 
-            partNumLabel.Text = currentFile.inventorDoc.DisplayName;
-            costLabel.Text = string.Format("{0:C}", Convert.ToDecimal(currentFile.cost));            
+                partNumLabel.Text = currentFile.inventorDoc.DisplayName;
+
+                costLabel.Text = string.Format("{0:C}", Convert.ToDecimal(currentFile.cost));
+            }
+            catch (Exception)
+            {
+               
+            }
+            //rawCostLabel.Text = string.Format("{0:C}", Convert.ToDecimal(currentFile.cost));
+            //purchasedCostLabel.Text = string.Format("{0:C}", Convert.ToDecimal(currentFile.cost));
         }
     }
 }

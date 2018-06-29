@@ -65,26 +65,17 @@ namespace CostEstimator
                         // Part Buttons
                         Ribbon partRibbon = m_inventorApplication.UserInterfaceManager.Ribbons["Part"];
                         RibbonTab toolsPartTab = partRibbon.RibbonTabs["id_TabTools"];
-                        //RibbonTab modelTab = partRibbon.RibbonTabs["id_TabModel"];
 
                         try
                         {
                             // For ribbon interface
                             // This is a new panel that can be made
                             RibbonPanel panel = toolsTab.RibbonPanels.Add("Cost Estimator", "Autodesk:Cost Estimator:Panel1", addInGUID, "", false);
-                            //   CommandControl control1 = panel.CommandControls.AddButton(m_PushParametersButton, true, true, "", false);
-                            //  CommandControl control2 = panel.CommandControls.AddButton(m_UpdateIlogicButtton, true, true, "", false);
+
                             CommandControl control1 = panel.CommandControls.AddButton(m_CostEstimator, true, true, "", false);
 
-                            // Child asy pulling from Parent
-                            //                  RibbonPanel panel_asm = assemblyTab.RibbonPanels.Add("Assembly to Parts", "Autodesk:Assembly to Parts:panel_asm", addInGUID, "", false);
-                            //             CommandControl control2 = panel_asm.CommandControls.AddButton(m_PullFromParents, true, true, "", false);
-
                             RibbonPanel pane1_part = toolsPartTab.RibbonPanels.Add("Cost Estimator", "Autodesk:Cost Estimator:pane1_part", addInGUID, "", false);
-                            CommandControl control4 = pane1_part.CommandControls.AddButton(m_CostEstimator, true, true, "", false);
-
-                            //RibbonPanel panel_model = toolsTab.RibbonPanels.Add("Cost Estimator", "Autodesk:Cost Estimator:pane1_model", addInGUID, "", false);
-                            //CommandControl control5 = panel_model.CommandControls.AddButton(m_CostEstimator, true, true, "", false);
+                            CommandControl control2 = pane1_part.CommandControls.AddButton(m_CostEstimator, true, true, "", false);
 
                         }
                         catch (Exception ex)
@@ -97,8 +88,6 @@ namespace CostEstimator
                         // For classic interface, possibly incorrect code
                         CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["AMxAssemblyPanelCmdBar"];
                         oCommandBar.Controls.AddButton(m_CostEstimator, 0);
-                        //    oCommandBar.Controls.AddButton(m_PushParametersButton, 0);
-                        //oCommandBar.Controls.AddButton(m_UpdateIlogicButtton, 0);
                     }
                 }
                 catch
@@ -106,9 +95,6 @@ namespace CostEstimator
                     // For classic interface, possibly incorrect code
                     CommandBar oCommandBar = m_inventorApplication.UserInterfaceManager.CommandBars["AMxAssemblyPanelCmdBar"];
                     oCommandBar.Controls.AddButton(m_CostEstimator, 0);
-
-                    //    oCommandBar.Controls.AddButton(m_PushParametersButton, 0);
-                    //oCommandBar.Controls.AddButton(m_UpdateIlogicButtton, 0);
                 }
             }
 
