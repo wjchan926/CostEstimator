@@ -48,13 +48,18 @@ namespace InvAddIn
                 partNumLabel.Text = currentFile.inventorDoc.DisplayName;
 
                 costLabel.Text = string.Format("{0:C}", Convert.ToDecimal(currentFile.cost));
+
+                currentFile.UpdateMaterial(currentFile.inventorDoc);
+                matGridView.DataSource = currentFile.matBreakdown;
+                matGridView.Update();
+                matGridView.Refresh();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-               
+                Console.WriteLine(ex.Message);
             }
-            //rawCostLabel.Text = string.Format("{0:C}", Convert.ToDecimal(currentFile.cost));
-            //purchasedCostLabel.Text = string.Format("{0:C}", Convert.ToDecimal(currentFile.cost));
-        }
+    //rawCostLabel.Text = string.Format("{0:C}", Convert.ToDecimal(currentFile.cost));
+    //purchasedCostLabel.Text = string.Format("{0:C}", Convert.ToDecimal(currentFile.cost));
+}
     }
 }

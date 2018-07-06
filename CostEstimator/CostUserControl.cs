@@ -18,11 +18,11 @@ namespace InvAddIn
 
         DockableWindow oWindow;
         int dockHeight = 500;
-        int dockWidth = 350;
+        int dockWidth = 500;
         public bool dockShown { get; private set; } = false;
 
         int initialDockHeight = 500;
-        int initialDockWidth = 350;
+        int initialDockWidth = 500;
         // bool inAction = false;
 
         string addInCLSIDStr;
@@ -38,6 +38,8 @@ namespace InvAddIn
         {
 
         }
+
+
 
         public void SetDockableWindow(string addinCLS)
         {
@@ -98,6 +100,8 @@ namespace InvAddIn
 
 
         }
+
+
     }
 
     public class WindowWrapper : IWin32Window

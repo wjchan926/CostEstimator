@@ -13,18 +13,13 @@ namespace InvAddIn
     {
         Application invApp;
         public Document inventorDoc;
-        DataTable matBreakdown;
+        public DataTable matBreakdown { get; private set; }
         public double cost { get; private set; }
+        string matFilepath = @"\\MSW-FP1\Shared\Marlin Software Output\Cost Estimator\MaterialPrices.csv";
         //public double rawCost { get; private set; } = 0;
         //public double purchasedCost { get; private set; } = 0;
-
-        static readonly Dictionary<string, double> materialMap = new Dictionary<string, double>()
-        {
-            { "1008 / 1010 PLAIN STEEL", 0.06 },
-            { "304 STAINLESS STEEL", 1.98 },
-            { "316 STAINLESS STEEL", 2.81 },
-            { "Galvanized Steel", 0.72 }
-        };
+               
+        static Dictionary<string, double> materialMap = new Dictionary<string, double>();
         
         Costable()
         {
@@ -33,16 +28,23 @@ namespace InvAddIn
 
         public Costable(Application currentApp, Document currentDoc)
         {
+            CreateMaterialDB();
             invApp = currentApp;
             inventorDoc = currentDoc;
             initializeMatBreakdown();
         }
 
+        private void CreateMaterialDB()
+        {
+            materialMap = System.IO.File.ReadLines(matFilepath).Select(line => line.Split(',')).ToDictionary(line => line[0], line => Convert.ToDouble(line[1]));
+        }
+
         private void initializeMatBreakdown()
         {
             matBreakdown = new DataTable();
+            matBreakdown.Columns.Add("Qty", typeof(int));
             matBreakdown.Columns.Add("Description", typeof(string));
-            matBreakdown.Columns.Add("Weight", typeof(decimal));
+      //      matBreakdown.Columns.Add("Weight", typeof(decimal));
             matBreakdown.Columns.Add("Material", typeof(string));
             matBreakdown.Columns.Add("Cost", typeof(decimal));
         }
@@ -85,17 +87,32 @@ namespace InvAddIn
                 }
 
                 Property materialProp = propertySet["Material"];
+       
+       
                 
                 // Mass of Part
                 mass = partCompDef.MassProperties.Mass;
 
                 // Material of Part
-                material = materialProp.Value.ToString();
+                if (materialProp.Value.ToString().Contains("MESH"))
+                {
+                    material = "MESH";
+                }
+                else if(materialProp.Value.ToString().Contains("EXPANDED METAL"))
+                {
+                    material = "EXPANDED METAL";
+                }
+                else
+                {
+                    material = materialProp.Value.ToString();
+                }
+
 
                 // Cost
                 try
                 {
-                    cost = mass * materialMap[material];
+                    // Multiple by 2.20462262 for kg to lbs conversion
+                    cost = mass * 2.20462262 * materialMap[material];
                 }
                 catch (Exception)
                 {
@@ -166,8 +183,8 @@ namespace InvAddIn
                     {
                         continue;
                     }
-  
-                }
+
+            }
 
                 asmCost.Value = cost;
 
@@ -191,17 +208,98 @@ namespace InvAddIn
             }
         }
 
+        public void UpdateMaterial(Document bomItem)
+        {
+            AssemblyDocument asmDoc;
+
+            if (bomItem.DocumentType == DocumentTypeEnum.kAssemblyDocumentObject)
+            {
+                asmDoc = (AssemblyDocument)bomItem;
+
+                AssemblyComponentDefinition compDef = asmDoc.ComponentDefinition;
+                BOM bom = compDef.BOM;
+                bom.StructuredViewFirstLevelOnly = true;
+
+                bom.StructuredViewEnabled = true;
+
+                BOMView bomView = bom.BOMViews["Structured"];
+
+                QueryBOM(bomView.BOMRows);
+            }
+        }
+        
+        private void QueryBOM(BOMRowsEnumerator bomRows)
+        {
+            for (int i = 1; i < bomRows.Count + 1; i++)
+            {
+                try
+                {
+                    BOMRow bomRow = bomRows[i];
+                               
+                    ComponentDefinition compDef = bomRow.ComponentDefinitions[1];
+
+                    Document doc = (Document)compDef.Document;
+                    PropertySets propertySets = doc.PropertySets;
+                    PropertySet propertySet = propertySets["Design Tracking Properties"];
+
+                    Property descProp = propertySet["Description"];
+                    //Property weightProp
+                    Property materialProp = propertySet["Material"];
+                    Property costProp = propertySet["Cost"];
+
+                    matBreakdown.Rows.Add(bomRow.ItemQuantity, descProp.Value, materialProp.Value, costProp.Value);
+
+                    Marshal.ReleaseComObject(costProp);
+                    costProp = null;
+                    Marshal.ReleaseComObject(materialProp);
+                    materialProp = null;
+                    Marshal.ReleaseComObject(descProp);
+                    descProp = null;
+                    Marshal.ReleaseComObject(propertySet);
+                    propertySet = null;
+                    Marshal.ReleaseComObject(propertySets);
+                    propertySets = null;
+                    Marshal.ReleaseComObject(doc);
+                    doc = null;
+                    Marshal.ReleaseComObject(compDef);
+                    compDef = null;
+                    Marshal.ReleaseComObject(bomRow);
+                    bomRow = null;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            }
+        }        
+
         private int GetOccurances(Document doc, ComponentOccurrences occurances)
         {
             int numOccurances = 0;
 
             foreach(ComponentOccurrence occurance in occurances)
             {
-                string partName = (occurance.Name).Substring(0, (occurance.Name).LastIndexOf(':'));
-                if ( partName == doc.DisplayName)
+                string partName = occurance.Name;
+
+                if (occurance.Name.Contains(':'))
+                {
+                    partName = (occurance.Name).Substring(0, (occurance.Name).LastIndexOf(':'));
+                }
+                else if (occurance.Name.Contains('_'))
+                {
+                    partName = (occurance.Name).Substring(0, (occurance.Name).LastIndexOf('_'));
+                }
+                else if (occurance.Name.Contains('-'))
+                {
+                    partName = (occurance.Name).Substring(0, (occurance.Name).LastIndexOf('-'));
+                }
+
+                if (partName == doc.DisplayName)
                 {
                     numOccurances++;
                 }
+
             }
 
             return numOccurances;

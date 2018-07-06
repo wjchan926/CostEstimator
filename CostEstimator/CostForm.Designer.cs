@@ -30,22 +30,22 @@
         {
             this.updateCostBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.matGridView = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.costLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.partNumLabel = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.matGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // updateCostBtn
             // 
-            this.updateCostBtn.Location = new System.Drawing.Point(263, 14);
+            this.updateCostBtn.Location = new System.Drawing.Point(407, 11);
             this.updateCostBtn.Name = "updateCostBtn";
             this.updateCostBtn.Size = new System.Drawing.Size(75, 23);
             this.updateCostBtn.TabIndex = 0;
@@ -63,13 +63,16 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Part #:";
             // 
-            // dataGridView1
+            // matGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 36);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(326, 516);
-            this.dataGridView1.TabIndex = 2;
+            this.matGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.matGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.matGridView.Location = new System.Drawing.Point(12, 36);
+            this.matGridView.Name = "matGridView";
+            this.matGridView.ReadOnly = true;
+            this.matGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.matGridView.Size = new System.Drawing.Size(470, 516);
+            this.matGridView.TabIndex = 2;
             // 
             // label2
             // 
@@ -102,9 +105,19 @@
             this.groupBox1.Controls.Add(this.updateCostBtn);
             this.groupBox1.Location = new System.Drawing.Point(0, 43);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(350, 181);
+            this.groupBox1.Size = new System.Drawing.Size(488, 181);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(16, 44);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(145, 20);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Total Material Cost:";
             // 
             // partNumLabel
             // 
@@ -118,23 +131,13 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.dataGridView1);
+            this.groupBox2.Controls.Add(this.matGridView);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Location = new System.Drawing.Point(0, 230);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(350, 558);
+            this.groupBox2.Size = new System.Drawing.Size(488, 558);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(16, 44);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(145, 20);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Total Material Cost:";
             // 
             // label6
             // 
@@ -150,7 +153,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 800);
+            this.ClientSize = new System.Drawing.Size(500, 800);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -158,7 +161,7 @@
             this.Name = "CostForm";
             this.Text = "CostForm";
             this.Load += new System.EventHandler(this.CostForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.matGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -172,7 +175,7 @@
 
         private System.Windows.Forms.Button updateCostBtn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView matGridView;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label costLabel;
         private System.Windows.Forms.GroupBox groupBox1;
